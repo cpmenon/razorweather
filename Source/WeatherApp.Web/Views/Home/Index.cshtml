@@ -1,0 +1,99 @@
+﻿@{
+    ViewBag.Title = "Weather App";
+}
+@using System.Web.Mvc.Html
+@model WeatherApp.Web.Models.WeatherViewModel
+
+<div class="jumbotron">
+    
+    @{
+        using (Html.BeginForm("Index", "Home", method: FormMethod.Post))
+        {
+            <table class="table table-condensed" style="width:auto">
+                <tr style="vertical-align: middle">
+                    <td>Country</td>
+                    <td>@Html.TextBoxFor(c => c.Country)</td>
+                    @if (Model.Exists)
+                    {
+                        <td>City</td>
+                        <td>
+
+
+                            @Html.DropDownListFor(x => Model.SelectedCity, Model.Cities)
+                            @Html.HiddenFor(x => x.SelectedCity)
+
+                        </td>
+                    }
+                    <td>
+                        <input id="submit" title="Search" type="submit" />
+                    </td>
+                </tr>
+            </table>
+        }
+        if (!string.IsNullOrEmpty(Model.Message))
+        {
+            <div>@Model.Message</div>
+        }
+        if (Model.Weather != null)
+        {
+            <div>
+               <table class="table table-condensed">
+                    <tr style="vertical-align: middle">
+                        <td>Time</td>
+                        <td>@Model.Weather.Time.ToString("dd/MM/yyyy hh:mm:ss tt")</td>                    
+                    </tr>
+                    <tr style="vertical-align: middle">
+                        <td>Location</td>
+                        <td>@Model.Weather.City</td>
+                    </tr>
+                    <tr style="vertical-align: middle">
+                        <td>Visibility</td>
+                        <td>@Model.Weather.Visibility</td>
+                    </tr>
+                    <tr>                      
+                        <td>
+                            <img src="~/Content/Images/wind.png" width="64px" />
+                            Wind
+                        </td>
+                        <td style="vertical-align: middle">@Model.Weather.Wind km/h</td>
+                    </tr>
+                    <tr style="vertical-align: middle">
+                        <td>
+                            <img src="~/Content/Images/sky.png" width="64px" />
+                            Sky Conditions
+                        </td>
+                        <td style="vertical-align: middle">@Model.Weather.SkyConditions</td>
+                    </tr>
+                    <tr style="vertical-align: middle">
+                        <td>
+                            <img src="~/Content/Images/temp.png" width="64px" />
+                            Temperatue
+                        </td>
+                        <td style="vertical-align: middle">@Model.Weather.Temperature °C</td>
+                    </tr>
+                    <tr style="vertical-align: middle">
+                        <td>
+                            <img src="~/Content/Images/dewpoint.png" width="64px" />
+                            Dew Point
+                        </td>
+                        <td style="vertical-align: middle">@Model.Weather.DewPoint °C</td>
+                    </tr>
+                    <tr style="vertical-align: middle">
+                        <td>
+                            <img src="~/Content/Images/rh.png" width="64px" />
+                            Relative Humidity
+                        </td>
+                        <td style="vertical-align: middle">@Model.Weather.RelativeHumidity %</td>
+                    </tr>
+                    <tr style="vertical-align: middle">
+                        <td>
+                            <img src="~/Content/Images/pressure.png" width="64px" />
+                            Pressue
+                        </td>
+                        <td style="vertical-align: middle">@Model.Weather.Pressure hPa</td>
+                    </tr>
+                </table>
+            </div>
+        }
+    }
+</div>
